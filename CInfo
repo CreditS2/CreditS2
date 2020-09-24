@@ -1,0 +1,40 @@
+<?php
+
+/**
+* @name CInfo
+* @main CInfo\CInfo
+* @author CrediT
+* @version [ 1.0.0 ]
+* @api [ 3.0.0 ]
+* @description ( 인포 플러그인 ) - 크레딧
+
+namespace CInfo
+
+use pocketmine\plugin\PluginBase;
+use pocketmine\event\Listener;
+use pocketmine\event\player\PlayerToggleSneakEvent;
+use pocketmine\Player;
+use pocketmine\item\Item;
+use pocketmine\level\Level;
+use UserLevelAPI\UserLevelAPI;
+use onebone\economyapi\EconomyAPI;
+use pocketmine\math\Vector3;
+use pocketmine\Server;
+
+class CInfo extends PluginBase implements Listener {
+public function onEnable() {
+
+$this->getServer ()->getPluginManager ()->registerEvents ( $this, $this );
+}
+
+public function CInfo (PlayerToggleSneakEvent $e) {
+ 
+  $player = $event->getPlayer();
+  $name = $player->getName();
+  $mymoney = EconomyAPI::getInstance()->myMoney($player);
+  $Rank = EconomyAPI::getInstance()->getRank($player);
+  $user = count($this->getServer()->getOnlinePlayers());
+  $player->sendTip("§f~~~~\n§b접속자 수 |§f {$user}(단위) \n§b보유 돈 | §f{$mymoney}(단위) §7{$Rank}위");
+
+}
+}
